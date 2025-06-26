@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$key-consulting-test-primary: mat.define-palette(mat.$light-blue-palette);
+$key-consulting-test-accent: mat.define-palette(mat.$light-blue-palette, A200, A100, A400);
+
+$key-consulting-test-warn: mat.define-palette(mat.$red-palette);
+
+$key-consulting-test-theme: mat.define-light-theme((
+  color: (
+    primary: $key-consulting-test-primary,
+    accent: $key-consulting-test-accent,
+    warn: $key-consulting-test-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+@include mat.all-component-themes($key-consulting-test-theme);
+
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: mat.get-color-from-palette($key-consulting-test-primary, 100);
+}
