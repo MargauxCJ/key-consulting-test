@@ -61,7 +61,7 @@ export class DepartmentDetailsComponent implements OnInit{
       filter((department): department is Department => !!department),
       switchMap((department: Department) => {
         this.departmentName = department.nom;
-        return this.geoService.getCommunesByDepartment(department.code)
+        return this.geoService.getTownsByDepartment(department.code)
       })
     ).subscribe(towns => {
       this.dataSource.data = towns;

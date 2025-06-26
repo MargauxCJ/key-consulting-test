@@ -25,7 +25,7 @@ export class GeoService {
     return this.http.get<Department[]>(`${this.apiUrl}/regions/${codeRegion}/departements`);
   }
 
-  getCommunesByDepartment(codeDepartment: string): Observable<Town[]> {
+  getTownsByDepartment(codeDepartment: string): Observable<Town[]> {
     return this.http.get<Town[]>(`${this.apiUrl}/departements/${codeDepartment}/communes`);
   }
 }

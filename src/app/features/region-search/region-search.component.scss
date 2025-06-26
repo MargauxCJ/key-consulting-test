@@ -43,18 +43,18 @@
   .region-container{
     height: max-content
   }
-}
 
-app-department-details {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-}
+  app-department-details {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
 
+}
 
 @media (max-width: 1200px) {
   .region-search-container {

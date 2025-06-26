@@ -37,3 +37,5 @@ I add the router-outlet testing in app component. Could be useful if I'm doing s
 - I made the deliberate choice to display the department-detail component inside the region-search component for user experience reasons.
 If there had been more information, I would have displayed it on a dedicated page. I left a piece of code in the routing to show that I know how to do it,
 but for the sake of usability, I preferred to keep it this way.
+I also had considered using a sub-routing approach to maintain logical navigation while staying on the same view, but it would have added an extra
+layer of technical complexity without any real functional benefit in this specific case.

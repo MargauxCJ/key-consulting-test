@@ -88,7 +88,7 @@ describe('GeoService', () => {
 
     const departmentCode= '14';
 
-    service.getCommunesByDepartment(departmentCode).subscribe((towns) => {
+    service.getTownsByDepartment(departmentCode).subscribe((towns) => {
       expect(towns).toEqual(mockTowns);
     });
 
