@@ -28,4 +28,11 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: mat.get-color-from-palette($key-consulting-test-primary, 100);
+
+  // Custom Card (I know, there is only one in this app, but I have to think globally
+  .mat-mdc-card {
+    box-shadow: none;
+    border-radius: 16px;
+    padding: 16px;
+  }
 }
