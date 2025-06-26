@@ -77,7 +77,10 @@ export class RegionSearchComponent implements OnInit {
   }
 
   public getDepartmentsFromRegionSelected(): void {
-    this.departments$ = typeof this.geoForm.controls.region.value === 'string' ?  null : this.geoService.getDepartmentsByRegion(this.geoForm.controls.region.value.code);
+    const regionValue = this.geoForm.controls.region?.value;
+    this.departments$ =  (regionValue && typeof regionValue !== 'string' && regionValue.code) ?
+      this.geoService.getDepartmentsByRegion(regionValue.code)
+      : null;
   }
 
   public onDepartmentChange(event: MatSelectionListChange): void {

@@ -47,7 +47,7 @@ export class DepartmentDetailsComponent implements OnInit{
   @ViewChild(MatSort, {}) public sort: MatSort;
   public dataSource = new MatTableDataSource<Town>();
   public departmentName: string;
-  public displayedColumns: string[] = ['code', 'nom', 'codeDepartement', 'siren', 'codeEpci', 'codeRegion', 'codesPostaux'];
+  public displayedColumns: string[] = ['code', 'nom', 'siren', 'codeEpci', 'codesPostaux'];
 
   constructor(
     private geoService: GeoService,

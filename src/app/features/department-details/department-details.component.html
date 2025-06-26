@@ -3,25 +3,22 @@
 
     <h2>{{ departmentName }}</h2>
 
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort class="table">
 
       @for (column of displayedColumns; track column) {
-        <!-- FIXME: find something prettier than this -->
-        @if (column !== 'codesPostaux') {
-          <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef> {{ column }}</th>
-            <td mat-cell *matCellDef="let element"> {{ element[column] }}</td>
-          </ng-container>
-        } @else {
-          <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }}</th>
-            <td mat-cell *matCellDef="let element">
+
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef> {{ column }}</th>
+          <td mat-cell *matCellDef="let element">
+            @if (column !== 'codesPostaux') {
+              {{ element[column] }}
+            } @else {
               @for (codePostal of element[column]; track codePostal) {
                 <span>{{ codePostal }}</span>
               }
-            </td>
-          </ng-container>
-        }
+            }
+          </td>
+        </ng-container>
       }
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

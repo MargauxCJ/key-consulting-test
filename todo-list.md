@@ -2,7 +2,7 @@
 
 ## initial commit
 
-- import what I need for the developpment :
+- import what I need for the development :
   - Angular Material
   - Jest (I prefere jest for unit test, so I have to remove Karma and Jasmine)
 
