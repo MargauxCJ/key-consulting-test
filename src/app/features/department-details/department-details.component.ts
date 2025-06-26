@@ -47,7 +47,7 @@ export class DepartmentDetailsComponent implements OnInit{
   @ViewChild(MatSort, {}) public sort: MatSort;
   public dataSource = new MatTableDataSource<Town>();
   public departmentName: string;
-  public displayedColumns: string[] = ['nom', 'code', 'siren', 'population', 'codesPostaux'];
+  public displayedColumns: string[] = ['code', 'nom', 'codeDepartement', 'siren', 'codeEpci', 'codeRegion', 'codesPostaux'];
 
   constructor(
     private geoService: GeoService,
@@ -55,7 +55,6 @@ export class DepartmentDetailsComponent implements OnInit{
     private cdr: ChangeDetectorRef
   ) {
   }
-
 
   public ngOnInit(): void {
     this.geoStore.selectedDepartment$.pipe(
