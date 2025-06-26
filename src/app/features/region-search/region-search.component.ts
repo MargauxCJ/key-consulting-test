@@ -12,6 +12,7 @@ import {MatListOption, MatSelectionList, MatSelectionListChange} from '@angular/
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
+import {DepartmentDetailsComponent} from '../department-details/department-details.component';
 
 @Component({
   selector: 'app-region-search',
@@ -30,7 +31,8 @@ import {MatIconButton} from '@angular/material/button';
     MatCard,
     MatCardContent,
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    DepartmentDetailsComponent
   ],
   templateUrl: './region-search.component.html',
   styleUrl: './region-search.component.scss'

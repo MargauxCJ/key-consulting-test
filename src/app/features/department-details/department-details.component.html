@@ -1,0 +1,34 @@
+@if (dataSource.data.length >0) {
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort>
+      @for (column of displayedColumns; track column) {
+        @if (column !== 'codesPostaux') {
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef> {{ column }}</th>
+            <td mat-cell *matCellDef="let element"> {{ element[column] }}</td>
+          </ng-container>
+        } @else {
+          <ng-container [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }}</th>
+            <td mat-cell *matCellDef="let element">
+              @for (codePostal of element[column]; track codePostal) {
+                <span>{{ codePostal }}</span>
+              }
+            </td>
+          </ng-container>
+        }
+      }
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator
+    [pageSize]="10"
+    showFirstLastButtons
+    aria-label="Sélectionnez une page">
+  </mat-paginator>
+}  @else {
+  <p>Veuillez sélectionner un département</p>
+}
