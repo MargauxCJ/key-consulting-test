@@ -15,7 +15,6 @@ import {GeoStore} from '../../core/stores/geo.store';
 import {MatIcon} from '@angular/material/icon';
 @Component({
   selector: 'app-region-search',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatFormField,
@@ -34,6 +33,7 @@ import {MatIcon} from '@angular/material/icon';
     MatError,
   ],
   templateUrl: './region-search.component.html',
+  standalone: true,
   styleUrl: './region-search.component.scss'
 })
 export class RegionSearchComponent implements OnInit {

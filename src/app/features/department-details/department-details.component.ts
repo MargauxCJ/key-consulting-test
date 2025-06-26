@@ -22,7 +22,6 @@ import {filter, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-department-details',
-  standalone: true,
   imports: [
     MatTable,
     MatHeaderCellDef,
@@ -36,10 +35,9 @@ import {filter, switchMap} from 'rxjs';
     MatRow,
     MatPaginator,
     MatSort,
-    MatSortHeader,
-
   ],
   templateUrl: './department-details.component.html',
+  standalone: true,
   styleUrl: './department-details.component.scss'
 })
 export class DepartmentDetailsComponent implements OnInit{
