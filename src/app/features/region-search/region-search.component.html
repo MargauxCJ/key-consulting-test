@@ -7,7 +7,7 @@
         <div style="display: flex">
         <input matInput
                [matAutocomplete]="auto"
-               (selectionchange)="displayDepartments()"
+               (selectionchange)="getDepartmentsFromRegionSelected()"
                [formControl]="regionFormControl"/>
 
         @if (regionFormControl.value) {
@@ -35,10 +35,7 @@
   </mat-card>
   </div>
   <div class="column department-details-container">
-    @if (departmentCode) {
-      <app-department-details [departmentCode]="departmentCode"></app-department-details>
-    }
-
+      <app-department-details></app-department-details>
   </div>
 </div>
 

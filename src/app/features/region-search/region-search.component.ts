@@ -9,10 +9,10 @@ import {MatInput} from '@angular/material/input';
 import {AsyncPipe} from '@angular/common';
 import {Department} from '../../core/models/department.model';
 import {MatListOption, MatSelectionList, MatSelectionListChange} from '@angular/material/list';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatIcon} from '@angular/material/icon';
-import {MatIconButton} from '@angular/material/button';
 import {DepartmentDetailsComponent} from '../department-details/department-details.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {GeoStore} from '../../core/stores/geo.store';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-region-search',
@@ -28,11 +28,10 @@ import {DepartmentDetailsComponent} from '../department-details/department-detai
     AsyncPipe,
     MatSelectionList,
     MatListOption,
+    DepartmentDetailsComponent,
     MatCard,
     MatCardContent,
-    MatIcon,
-    MatIconButton,
-    DepartmentDetailsComponent
+    MatIcon
   ],
   templateUrl: './region-search.component.html',
   styleUrl: './region-search.component.scss'
@@ -42,11 +41,13 @@ export class RegionSearchComponent implements OnInit {
   public departmentFormControl = new FormControl<Department>(null);
   public filteredRegionList$: Observable<Region[]>;
   public departments$: Observable<Department[]>;
-  public departmentCode: string;
   public allRegions$: Observable<Region[]>;
 
-  constructor(private geoService: GeoService) {
-      this.allRegions$ = this.geoService.getRegions();
+  constructor(
+    private geoService: GeoService,
+    private geoStore: GeoStore,
+    ) {
+    this.allRegions$ = this.geoService.getRegions();
   }
 
   ngOnInit(): void {
@@ -72,14 +73,14 @@ export class RegionSearchComponent implements OnInit {
     return region ? region.nom : '';
   }
 
-  public displayDepartments(): void {
+  public getDepartmentsFromRegionSelected(): void {
     this.departments$ = typeof this.regionFormControl.value === 'string' ?  null : this.geoService.getDepartmentsByRegion(this.regionFormControl.value.code);
   }
 
-  onDepartmentChange(event: MatSelectionListChange): void {
+  public onDepartmentChange(event: MatSelectionListChange): void {
     const selected = event.options[0]?.value;
     if (selected) {
-      this.departmentCode = selected.code;
+      this.geoStore.setSelectedDepartment(selected);
     }
   }
 }

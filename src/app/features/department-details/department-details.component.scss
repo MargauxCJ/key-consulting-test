@@ -1,0 +1,18 @@
+.table-container {
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+}
+@media (max-width: 1200px) {
+  .table-container {
+    position: relative;
+    max-width: 100%;
+    overflow: auto;
+  }
+}
+
+span:not(:last-child):after {
+  content: ", ";
+}

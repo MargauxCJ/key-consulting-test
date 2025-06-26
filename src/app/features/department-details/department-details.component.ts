@@ -1,5 +1,4 @@
-import {Component, Input, OnChanges, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {GeoService} from '../../core/services/geo.service';
 import {Town} from '../../core/models/town.model';
 import {
@@ -17,6 +16,9 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
+import {Department} from '../../core/models/department.model';
+import {GeoStore} from '../../core/stores/geo.store';
+import {filter, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-department-details',
@@ -35,28 +37,41 @@ import {MatSort, MatSortHeader} from '@angular/material/sort';
     MatPaginator,
     MatSort,
     MatSortHeader,
+
   ],
   templateUrl: './department-details.component.html',
   styleUrl: './department-details.component.scss'
 })
-export class DepartmentDetailsComponent implements OnChanges{
-  @Input() departmentCode: string;
-  towns$: Observable<Town[]>;
-  dataSource = new MatTableDataSource<Town>();
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['nom', 'code', 'siren', 'population', 'codeRegion', 'codePostaux'];
+export class DepartmentDetailsComponent implements OnInit{
+  @ViewChild(MatPaginator, {}) public paginator: MatPaginator;
+  @ViewChild(MatSort, {}) public sort: MatSort;
+  public dataSource = new MatTableDataSource<Town>();
+  public departmentName: string;
+  public displayedColumns: string[] = ['nom', 'code', 'siren', 'population', 'codesPostaux'];
 
-  constructor(private geoService: GeoService) {
-
+  constructor(
+    private geoService: GeoService,
+    private geoStore: GeoStore,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
-  public ngOnChanges(): void {
-    this.towns$ = this.geoService.getCommunesByDepartment(this.departmentCode);
-    this.towns$.subscribe((towns: Town[]) => {
+
+  public ngOnInit(): void {
+    this.geoStore.selectedDepartment$.pipe(
+      filter((department): department is Department => !!department),
+      switchMap((department: Department) => {
+        this.departmentName = department.nom;
+        return this.geoService.getCommunesByDepartment(department.code)
+      })
+    ).subscribe(towns => {
       this.dataSource.data = towns;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.cdr.detectChanges();
+
+      if (this.paginator && this.sort && towns) {
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     });
   }
 }

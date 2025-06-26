@@ -1,8 +1,12 @@
-@if (dataSource.data.length >0) {
-
+@if (dataSource.data.length > 0) {
   <div class="table-container">
+
+    <h2>{{ departmentName }}</h2>
+
     <table mat-table [dataSource]="dataSource" matSort>
       @for (column of displayedColumns; track column) {
+
+        <!-- FIXME: find something prettier than this -->
         @if (column !== 'codesPostaux') {
           <ng-container [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef> {{ column }}</th>
@@ -29,6 +33,6 @@
     showFirstLastButtons
     aria-label="Sélectionnez une page">
   </mat-paginator>
-}  @else {
+} @else {
   <p>Veuillez sélectionner un département</p>
 }
