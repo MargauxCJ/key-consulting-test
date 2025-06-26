@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {GeoService} from '../../core/services/geo.service';
 import {combineLatest, debounceTime, map, Observable, startWith} from 'rxjs';
 import {Region} from '../../core/models/region.model';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormBuilder, FormControl, ReactiveFormsModule,Validators} from '@angular/forms';
+import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {MatInput} from '@angular/material/input';
 import {AsyncPipe} from '@angular/common';
@@ -13,7 +13,6 @@ import {DepartmentDetailsComponent} from '../department-details/department-detai
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {GeoStore} from '../../core/stores/geo.store';
 import {MatIcon} from '@angular/material/icon';
-
 @Component({
   selector: 'app-region-search',
   standalone: true,
@@ -31,19 +30,23 @@ import {MatIcon} from '@angular/material/icon';
     DepartmentDetailsComponent,
     MatCard,
     MatCardContent,
-    MatIcon
+    MatIcon,
+    MatError,
   ],
   templateUrl: './region-search.component.html',
   styleUrl: './region-search.component.scss'
 })
 export class RegionSearchComponent implements OnInit {
-  public regionFormControl = new FormControl<Region|string>('');
+  public geoForm = this.formBuilder.group({
+    region: [null as string|Region, [Validators.required]],
+  });
   public departmentFormControl = new FormControl<Department>(null);
   public filteredRegionList$: Observable<Region[]>;
   public departments$: Observable<Department[]>;
   public allRegions$: Observable<Region[]>;
 
   constructor(
+    private formBuilder: FormBuilder,
     private geoService: GeoService,
     private geoStore: GeoStore,
     ) {
@@ -52,7 +55,7 @@ export class RegionSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.filteredRegionList$ = combineLatest([
-      this.regionFormControl.valueChanges.pipe(
+      this.geoForm.controls.region.valueChanges.pipe(
         startWith(''),
         debounceTime(300)
       ),
@@ -74,7 +77,7 @@ export class RegionSearchComponent implements OnInit {
   }
 
   public getDepartmentsFromRegionSelected(): void {
-    this.departments$ = typeof this.regionFormControl.value === 'string' ?  null : this.geoService.getDepartmentsByRegion(this.regionFormControl.value.code);
+    this.departments$ = typeof this.geoForm.controls.region.value === 'string' ?  null : this.geoService.getDepartmentsByRegion(this.geoForm.controls.region.value.code);
   }
 
   public onDepartmentChange(event: MatSelectionListChange): void {

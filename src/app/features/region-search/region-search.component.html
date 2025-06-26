@@ -1,42 +1,50 @@
 <div class="region-search-container">
   <div class="column region-container">
-  <mat-card>
-    <mat-card-content>
-      <mat-form-field appearance="outline">
-        <mat-label>Région</mat-label>
-        <div style="display: flex">
-        <input matInput
-               [matAutocomplete]="auto"
-               (selectionchange)="getDepartmentsFromRegionSelected()"
-               [formControl]="regionFormControl"/>
+    <form [formGroup]="geoForm">
+      <mat-card>
+        <mat-card-content>
 
-        @if (regionFormControl.value) {
-              <mat-icon (click)="regionFormControl.reset('')">clear</mat-icon>
-        }
-        </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Région</mat-label>
+            <div style="display: flex">
+              <input matInput
+                     [matAutocomplete]="regionAutoComplete"
+                     (selectionchange)="getDepartmentsFromRegionSelected()"
+                     [formControlName]="'region'"/>
 
-        <mat-autocomplete autoActiveFirstOption #auto [displayWith]="displayRegion">
-          @for (item of filteredRegionList$ |async; track item) {
-            <mat-option [value]="item">{{ item.nom }}</mat-option>
+              @if (geoForm.controls.region.value) {
+                <mat-icon (click)="geoForm.controls.region.reset('')">clear</mat-icon>
+              }
+            </div>
+            @if (geoForm.controls.region.hasError('required')) {
+              <mat-error>Veuillez sélectionner une région</mat-error>
+            }
+
+            <mat-autocomplete #regionAutoComplete [displayWith]="displayRegion">
+              @for (item of filteredRegionList$ |async; track item) {
+                <mat-option [value]="item">{{ item.nom }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+
+          @if (departments$|async; as departments) {
+            <mat-selection-list (selectionChange)="onDepartmentChange($event)" [multiple]="false">
+              @for (department of departments; track department) {
+                <mat-list-option [value]="department">{{ department.nom }}</mat-list-option>
+              }
+            </mat-selection-list>
+          } @else {
+            <p>Aucune région sélectionnée.</p>
           }
-        </mat-autocomplete>
-      </mat-form-field>
-
-      @if (departments$|async; as departments) {
-        <mat-selection-list (selectionChange)="onDepartmentChange($event)" [multiple]="false">
-          @for (department of departments; track department) {
-            <mat-list-option [value]="department">{{ department.nom }}</mat-list-option>
-          }
-        </mat-selection-list>
-      } @else {
-        <p>Veuillez selectionner une Région.</p>
-      }
-    </mat-card-content>
-  </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </form>
   </div>
+
   <div class="column department-details-container">
-      <app-department-details></app-department-details>
+    <app-department-details></app-department-details>
   </div>
+
 </div>
 
 

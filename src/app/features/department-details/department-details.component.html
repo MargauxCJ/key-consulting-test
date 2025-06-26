@@ -4,8 +4,8 @@
     <h2>{{ departmentName }}</h2>
 
     <table mat-table [dataSource]="dataSource" matSort>
-      @for (column of displayedColumns; track column) {
 
+      @for (column of displayedColumns; track column) {
         <!-- FIXME: find something prettier than this -->
         @if (column !== 'codesPostaux') {
           <ng-container [matColumnDef]="column">
@@ -34,5 +34,5 @@
     aria-label="Sélectionnez une page">
   </mat-paginator>
 } @else {
-  <p>Veuillez sélectionner un département</p>
+  <p>Aucune département sélectionné.</p>
 }
