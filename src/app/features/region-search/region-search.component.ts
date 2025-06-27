@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {GeoService} from '../../core/services/geo.service';
 import {combineLatest, debounceTime, map, Observable, startWith} from 'rxjs';
 import {Region} from '../../core/models/region.model';
@@ -37,19 +37,19 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './region-search.component.scss'
 })
 export class RegionSearchComponent implements OnInit {
-  public geoForm = this.formBuilder.group({
-    region: [null as string|Region, [Validators.required]],
-  });
+  private formBuilder = inject(FormBuilder);
+  private geoService = inject(GeoService);
+  private geoStore = inject(GeoStore);
+
   public departmentFormControl = new FormControl<Department>(null);
   public filteredRegionList$: Observable<Region[]>;
   public departments$: Observable<Department[]>;
   public allRegions$: Observable<Region[]>;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private geoService: GeoService,
-    private geoStore: GeoStore,
-    ) {
+  public geoForm = this.formBuilder.group({
+    region: [null as string|Region, [Validators.required]],
+  });
+  constructor() {
     this.allRegions$ = this.geoService.getRegions();
   }
 

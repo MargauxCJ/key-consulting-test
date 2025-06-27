@@ -33,12 +33,12 @@ describe('RegionSearchComponent just filteredRegionList$', () => {
     fixture.detectChanges();
   });
 
-  // unsubscribe and flush to clean timer
+  // unsubscribe and flush to clean timer, because of debounce time
   function setValueAndGetFilteredResult(value: string, tickTime = 300): Region[] {
     let result: Region[] = [];
     const sub = component.filteredRegionList$.subscribe((filtered: Region[]) => result = filtered);
 
-    component.regionFormControl.setValue(value);
+    component.geoForm.controls.region.setValue(value);
     tick(tickTime);
     sub.unsubscribe();
     flush();

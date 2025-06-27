@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Department} from '../models/department.model';
 import {Region} from '../models/region.model';
@@ -10,9 +10,7 @@ import {Town} from '../models/town.model';
 })
 export class GeoService {
   private apiUrl = 'https://geo.api.gouv.fr';
-
-  constructor(private http: HttpClient) {}
-
+  private http = inject(HttpClient)
   getRegions(): Observable<Region[]> {
     return this.http.get<Region[]>(`${this.apiUrl}/regions`);
   }
