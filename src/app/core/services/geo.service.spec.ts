@@ -34,7 +34,6 @@ describe('GeoService', () => {
     ];
 
     service.getRegions().subscribe((regions: Region[]) => {
-      console.log(regions);
       expect(regions).toEqual(mockRegions);
     });
 
