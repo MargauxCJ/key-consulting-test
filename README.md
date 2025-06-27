@@ -11,3 +11,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ### Running unit tests
 
 Run `npm run test` to execute the unit tests via JEST.
+
+### Running ESLINT
+
+Run `npx ng lint` to execut the eslint testing.
